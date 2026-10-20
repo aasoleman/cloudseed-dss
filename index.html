@@ -16,8 +16,8 @@ body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 "Segoe UI",Tah
 header{background:linear-gradient(120deg,#0a3d62,#0e8a8a);color:#fff;padding:22px 24px;box-shadow:0 2px 10px rgba(10,61,98,.25);display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
 header h1{margin:0;font-size:22px;line-height:1.3;letter-spacing:.2px;max-width:780px}header p{margin:2px 0 0;font-size:13px;opacity:.85}
 .by{margin-top:10px;padding-top:8px;border-top:1px solid rgba(255,255,255,.3);display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-size:13px}.by .lb{opacity:.7;text-transform:uppercase;letter-spacing:.6px;font-size:11px}.by .nm{font-weight:700;font-size:15px}.by .af{opacity:.9}.by .af:before{content:"";display:inline-block;width:4px;height:4px;border-radius:50%;background:#fff;opacity:.7;margin:0 8px 2px 0;vertical-align:middle}[dir=rtl] .by .af:before{margin:0 0 2px 8px}
-.brand{display:flex;gap:18px;align-items:center}.logo{height:68px;width:auto;background:#fff;border-radius:12px;padding:8px;box-shadow:0 2px 8px rgba(0,0,0,.2);flex:none}
-@media(max-width:640px){.brand{flex-direction:column;align-items:flex-start;gap:12px}.logo{height:54px}}
+.brand{display:flex;gap:22px;align-items:center}.logo{height:92px;width:auto;background:#fff;border-radius:14px;padding:10px;box-shadow:0 2px 8px rgba(0,0,0,.2);flex:none}
+@media(max-width:640px){.brand{flex-direction:column;align-items:flex-start;gap:12px}.logo{height:70px}}
 .hbtn{display:flex;gap:8px;flex-wrap:wrap}
 button,.btn{font:inherit;border:0;border-radius:8px;padding:8px 14px;cursor:pointer;background:var(--pri);color:#fff;font-weight:600}
 button.sec{background:#fff;color:var(--pri);border:1px solid var(--line)}header button.sec{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.35)}
@@ -64,7 +64,7 @@ footer{max-width:1180px;margin:0 auto;padding:16px 16px 30px;font-size:12px;colo
 <body>
 <div class="ribbon" data-i="ribbon"><b>Research prototype</b> · synthetic data unless a CSV is uploaded · not for operational use</div>
 <header>
-  <div class="brand"><img class="logo" src="uj-logo.svg" alt="University of Jeddah logo" width="64" height="68"><div><h1 data-i="title">CloudSeed DSS — Physics-Informed RL Decision Support for Cloud Seeding</h1>
+  <div class="brand"><img class="logo" src="uj-logo.svg" alt="University of Jeddah logo" width="87" height="92"><div><h1 data-i="title">CloudSeed DSS — Physics-Informed RL Decision Support for Cloud Seeding</h1>
   <p data-i="sub">Research prototype of the R-PIBRL framework · Hybrid Intelligent Predictive Models for Evaluating Cloud Seeding Impact</p>
   <div class="by" data-i="author"><span class="lb">Prepared by</span><span class="nm">Alaa Alarood</span><span class="af">University of Jeddah</span></div></div></div>
   <div class="hbtn"><button class="sec" id="lang" aria-label="Switch language">العربية</button><button class="sec" onclick="window.print()" data-i="print">Print / PDF</button><button id="runTop" data-i="run">▶ Run pipeline</button></div>
