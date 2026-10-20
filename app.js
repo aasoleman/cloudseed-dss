@@ -6,6 +6,10 @@ const TABS = [['overview', 'Overview', 'نظرة عامة'], ['setup', 'Data & S
   ['res', 'Results', 'النتائج'], ['dss', 'Decision Support', 'دعم القرار'], ['review', 'Review Mapping', 'مطابقة معايير التحكيم']];
 const AR = {
   title: 'CloudSeed DSS — نظام دعم قرار لتلقيح السحب بالتعلم المعزز المعتمد على الفيزياء',
+  ribbon: '<b>نموذج أولي بحثي</b> · بيانات اصطناعية ما لم يُرفع CSV · غير مخصص للاستخدام التشغيلي',
+  h_demo: 'ابدأ من هنا: عرض تجريبي موجّه',
+  p_demo: 'بنقرة واحدة تُولَّد البيانات الاصطناعية ويُشغَّل المسار كاملاً (نحو 10–60 ثانية) ثم تُفتح النتائج. بعدها يمكنك تصفح التبويبات ولوحة القرار التفاعلية.',
+  demo: '▶ تشغيل العرض التجريبي',
   author: '<span class="lb">إعداد</span><span class="nm">علاء العرود</span><span class="af">جامعة جدة</span>',
   sub: 'نموذج أولي بحثي لإطار R-PIBRL · النماذج التنبؤية الذكية الهجينة لتقييم تأثير تلقيح السحب',
   print: 'طباعة / PDF', run: '▶ تشغيل المسار', h_prob: 'مشكلة البحث',
@@ -73,6 +77,7 @@ function renderData() {
 
 /* ---------- run ---------- */
 function cfgNow() { return { eng: $('#c-eng').checked, fair: $('#c-fair').checked, lambda: +$('#c-lam').value, gamma: +$('#c-gam').value, epochs: +$('#c-ep').value, rlEpochs: +$('#c-rl').value, seed: 3 }; }
+let after = 'feat';
 async function run() {
   const ti = +$('#sel-t').value, ci = +$('#sel-c').value;
   if (ti === ci) { alert('Target and control must differ.'); return; }
@@ -84,11 +89,12 @@ async function run() {
       epoch: async (e, n) => { $('#ov-b').style.width = (10 + 70 * e / n) + '%'; await new Promise(r => setTimeout(r, 0)); }
     });
     R.ti = ti; R.ci = ci; R.cfg = cfgNow(); $('#ov-b').style.width = '100%';
-    renderAll(); go('feat');
+    renderAll(); go(after); after = 'feat';
   } catch (e) { console.error(e); alert('Pipeline error: ' + e.message); }
   $('#ov').style.display = 'none'; $('#runBtn').disabled = $('#runTop').disabled = false;
 }
 $('#runBtn').onclick = $('#runTop').onclick = run;
+$('#demo').onclick = () => { after = 'res'; run(); };
 $('#regen').onclick = () => loadData(Core.genData({ seed: +$('#c-seed').value || 7, enh: (+$('#c-enh').value || 0) / 100 }));
 $('#csv').onchange = async e => { try { loadData(Core.parseCSV(await e.target.files[0].text())); } catch (x) { alert(x.message); } };
 $('#sel-t').onchange = $('#sel-c').onchange = renderData;
