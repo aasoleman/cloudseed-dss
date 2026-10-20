@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CloudSeed DSS</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#f4f7fa;--card:#fff;--ink:#14263a;--mut:#5d6f82;--line:#dde5ec;--pri:#0b5c8e;--pri2:#0e8a8a;--ok:#1b8a4b;--bad:#c0392b;--warn:#b7791f;--r:12px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Segoe UI",Tahoma,Arial,sans-serif}
+header{background:linear-gradient(120deg,#0a3d62,#0e8a8a);color:#fff;padding:18px 24px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+header h1{margin:0;font-size:20px;letter-spacing:.2px}header p{margin:2px 0 0;font-size:13px;opacity:.85}
+.hbtn{display:flex;gap:8px;flex-wrap:wrap}
+button,.btn{font:inherit;border:0;border-radius:8px;padding:8px 14px;cursor:pointer;background:var(--pri);color:#fff;font-weight:600}
+button.sec{background:#fff;color:var(--pri);border:1px solid var(--line)}header button.sec{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.35)}
+button:disabled{opacity:.5;cursor:wait}
+nav{display:flex;gap:4px;padding:10px 24px 0;background:#fff;border-bottom:1px solid var(--line);overflow-x:auto;position:sticky;top:0;z-index:5}
+nav button{background:none;color:var(--mut);border-radius:8px 8px 0 0;padding:10px 14px;white-space:nowrap;border-bottom:3px solid transparent}
+nav button.on{color:var(--pri);border-bottom-color:var(--pri)}
+main{max-width:1180px;margin:0 auto;padding:22px 16px 40px}
+section{display:none}section.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;margin-bottom:16px}
+.card h2{margin:0 0 8px;font-size:17px}.card h3{margin:14px 0 6px;font-size:15px}
+.grid{display:grid;gap:16px}.g2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}.g4{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.kpi b{display:block;font-size:22px;color:var(--pri)}.kpi span{font-size:12px;color:var(--mut)}
+.ch{position:relative;height:290px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}th{background:#eef3f7;font-weight:600}
+td.n{font-variant-numeric:tabular-nums;text-align:end}
+.note{background:#fff8e6;border:1px solid #f0d9a0;color:#6b4e0e;border-radius:8px;padding:9px 12px;font-size:13px;margin:10px 0}
+.info{background:#eaf4fb;border:1px solid #bcdcf0;color:#17415f;border-radius:8px;padding:9px 12px;font-size:13px;margin:10px 0}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin:10px 0}
+.flow div{flex:1 1 150px;background:#eef6f8;border:1px solid #cfe3e8;border-radius:10px;padding:10px;font-size:13px}.flow b{display:block;color:var(--pri2)}
+label{display:block;font-size:13px;color:var(--mut);margin:8px 0 3px}select,input[type=number]{width:100%;padding:7px;border:1px solid var(--line);border-radius:8px;font:inherit}
+input[type=range]{width:100%}.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:4px 18px}
+.chk{display:flex;gap:8px;align-items:center;margin:8px 0;color:var(--ink)}.chk input{width:auto}
+.badge{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:700}
+.rec{font-size:26px;font-weight:800;padding:14px;border-radius:12px;text-align:center}.rec.s{background:#e3f5ea;color:var(--ok)}.rec.n{background:#f3f4f6;color:#4b5563}
+.heat td{text-align:center;font-size:12px;padding:6px;border:1px solid #fff;min-width:54px}
+#ov{position:fixed;inset:0;background:rgba(10,30,50,.55);display:none;align-items:center;justify-content:center;z-index:20}
+#ov .box{background:#fff;border-radius:14px;padding:22px 26px;width:min(520px,92vw)}
+.bar{height:8px;background:#e3eaf0;border-radius:6px;overflow:hidden;margin:10px 0}.bar i{display:block;height:100%;width:0;background:var(--pri2);transition:width .2s}
+#log{font:12px/1.5 Consolas,monospace;color:var(--mut);max-height:130px;overflow:auto}
+footer{max-width:1180px;margin:0 auto;padding:0 16px 30px;font-size:12px;color:var(--mut)}
+[dir=rtl] .flow{direction:rtl}
+.kpi b,td.n{direction:ltr;unicode-bidi:isolate}[dir=rtl] .kpi b,[dir=rtl] td.n{text-align:right}
+@media print{nav,header .hbtn,#ov{display:none}section{display:block!important}.card{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header>
+  <div><h1 data-i="title">CloudSeed DSS — Physics-Informed RL Decision Support for Cloud Seeding</h1>
+  <p data-i="sub">Research prototype of the R-PIBRL framework · Hybrid Intelligent Predictive Models for Evaluating Cloud Seeding Impact</p></div>
+  <div class="hbtn"><button class="sec" id="lang">العربية</button><button class="sec" onclick="window.print()" data-i="print">Print / PDF</button><button id="runTop" data-i="run">▶ Run pipeline</button></div>
+</header>
+<nav id="nav"></nav>
+<main>
+
+<section id="s-overview" class="on">
+  <div class="card"><h2 data-i="h_prob">Research problem</h2>
+    <p data-i="p_prob">Arid regions such as the UAE and Saudi Arabia rely on cloud seeding to enhance rainfall, yet its effectiveness is hard to prove and hard to time: the signal is small against natural variability, and purely data-driven models ignore atmospheric physics. This prototype demonstrates an end-to-end decision-support pipeline that (1) detects seeding-related change in rainfall against a control region, (2) learns rainfall from physically constrained models, and (3) recommends when seeding is worth its cost.</p>
+    <div class="flow">
+      <div><b>1 · Data</b><span data-i="f1">7 stations, daily 2000–2025 (Meteostat-style schema)</span></div>
+      <div><b>2 · Features</b><span data-i="f2">Target-Control Regression, CUSUM, Mann-Kendall change point</span></div>
+      <div><b>3 · Physics</b><span data-i="f3">Koren-Feingold aerosol–cloud–precipitation prior φ(A,C,W)</span></div>
+      <div><b>4 · Bellman RL</b><span data-i="f4">Q-learning Seed / NoSeed, physics-initialised</span></div>
+      <div><b>5 · Decision</b><span data-i="f5">What-if console with recommendation and confidence</span></div>
+    </div></div>
+  <div class="grid g2">
+    <div class="card"><h2 data-i="h_obj">Objectives</h2><ul>
+      <li data-i="o1">Quantify seeding-related shifts in precipitation using target/control regression and non-parametric change-point tests.</li>
+      <li data-i="o2">Embed aerosol–cloud–precipitation physics in learning (soft physics loss + physics-initialised Bellman agent).</li>
+      <li data-i="o3">Compare against a data-only GBDT baseline and rule-of-thumb seeding policies with transparent metrics.</li>
+      <li data-i="o4">Provide an interactive what-if tool for operational planners.</li></ul></div>
+    <div class="card"><h2 data-i="h_nat">National priority</h2>
+      <p data-i="p_nat">Water security is a national priority (Saudi Vision 2030 and the National Water Strategy 2030). Rain enhancement is an active programme in the region; evidence-based evaluation and timing reduce wasted operations and strengthen the scientific case for seeding.</p>
+      <div class="note" data-i="p_warn"><b>Scope:</b> this is a research prototype running on <b>synthetic UAE-like data</b> (or a CSV you upload). It is not an operational forecasting or seeding system.</div></div>
+  </div>
+</section>
+
+<section id="s-setup">
+  <div class="grid g2">
+    <div class="card"><h2 data-i="h_data">Data</h2>
+      <div class="row"><div><label data-i="l_seed">Random seed</label><input type="number" id="c-seed" value="7"></div>
+      <div><label data-i="l_enh">Simulated seeding effect on favourable days (%)</label><input type="number" id="c-enh" value="25" min="0" max="60"></div></div>
+      <div class="hbtn" style="margin-top:10px"><button class="sec" id="regen" data-i="regen">Regenerate synthetic data</button>
+      <label class="btn sec" style="margin:0;display:inline-block"><span data-i="upl">Upload CSV (beta)</span><input type="file" id="csv" accept=".csv" hidden></label></div>
+      <p style="font-size:12.5px;color:var(--mut)" data-i="csvhelp">CSV columns: station, date, tavg, tmin, tmax, prcp, wdir, wspd, pres, tsun (optional: aod). At least two stations.</p>
+      <div id="dstat"></div></div>
+    <div class="card"><h2 data-i="h_set">Experiment settings</h2>
+      <div class="row"><div><label data-i="l_t">Target (seeded) station</label><select id="sel-t"></select></div>
+      <div><label data-i="l_c">Control (unseeded) station</label><select id="sel-c"></select></div>
+      <div><label><span data-i="l_lam">Physics weight λ:</span> <b id="v-lam">0.30</b></label><input type="range" id="c-lam" min="0" max="1" step="0.05" value="0.3"></div>
+      <div><label><span data-i="l_gam">Discount γ:</span> <b id="v-gam">0.90</b></label><input type="range" id="c-gam" min="0.5" max="0.99" step="0.01" value="0.9"></div>
+      <div><label data-i="l_ep">Network epochs</label><input type="number" id="c-ep" value="25" min="5" max="80"></div>
+      <div><label data-i="l_rl">Q-learning epochs</label><input type="number" id="c-rl" value="15" min="3" max="40"></div></div>
+      <div class="chk"><input type="checkbox" id="c-eng" checked><span data-i="l_eng">Use engineered features (target-control residual, regime flag, CUSUM)</span></div>
+      <div class="chk"><input type="checkbox" id="c-fair" checked><span data-i="l_fair">Give the GBDT baseline the same derived/engineered features (fair comparison)</span></div>
+      <button id="runBtn" data-i="run">▶ Run pipeline</button></div>
+  </div>
+  <div class="card"><h2 data-i="h_prev">Data preview (target station)</h2><div id="dprev" style="overflow:auto"></div><div class="ch" style="margin-top:12px"><canvas id="ch-month"></canvas></div></div>
+</section>
+
+<section id="s-feat"><div id="feat-empty" class="info" data-i="needrun">Run the pipeline first.</div><div id="feat"></div></section>
+<section id="s-model"><div id="model-empty" class="info" data-i="needrun">Run the pipeline first.</div><div id="model"></div></section>
+<section id="s-res"><div id="res-empty" class="info" data-i="needrun">Run the pipeline first.</div><div id="res"></div></section>
+
+<section id="s-dss">
+  <div class="card"><h2 data-i="h_dss">What-if decision console</h2>
+    <div class="info" data-i="dsshelp">Set the current atmospheric state. The trained physics-informed network estimates rainfall; the Bellman agent compares Seed vs NoSeed. Confidence depends on how often similar states were seen in training.</div>
+    <div class="grid g2"><div id="dss-in" class="row"></div><div id="dss-out"></div></div></div>
+</section>
+
+<section id="s-review">
+  <div class="card"><h2 data-i="h_rq">Answer to the review-form question: what research problem does the prototype solve?</h2>
+    <p data-i="p_rq">It provides a reproducible, physics-aware way to (a) detect and quantify cloud-seeding-related change in rainfall against a control region, and (b) decide, state by state, when seeding is expected to pay off, instead of relying on fixed rules or purely statistical post-event assessment.</p></div>
+  <div class="card"><h2 data-i="h_map">Mapping to the Prototype Review Form criteria</h2><div style="overflow:auto"><table id="map"></table></div></div>
+  <div class="card"><h2 data-i="h_lim">Limitations and roadmap (stated openly)</h2><ul id="lim"></ul></div>
+</section>
+</main>
+<footer>
+  <p><b>Acknowledgement.</b> This work was funded by the University of Jeddah, Jeddah, Saudi Arabia, under grant No. (UJ-24-SUTU-20746). The authors, therefore, thank the University of Jeddah for its technical and financial support.</p>
+  <p data-i="disc">Research prototype · synthetic data unless a CSV is uploaded · not for operational use.</p>
+</footer>
+<div id="ov"><div class="box"><b id="ov-t">Running…</b><div class="bar"><i id="ov-b"></i></div><div id="log"></div></div></div>
+<script src="core.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
