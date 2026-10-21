@@ -1,0 +1,50 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "CloudSeed DSS: a physics-informed reinforcement-learning decision-support prototype for cloud-seeding evaluation"
+type: software
+version: 1.0.0
+date-released: 2026-10-21
+doi: 10.5281/zenodo.23536519
+license: MIT
+url: "https://aasoleman.github.io/cloudseed-dss/"
+repository-code: "https://github.com/aasoleman/cloudseed-dss"
+authors:
+  - family-names: Alarood
+    given-names: Ala Abdulsalam
+    affiliation: "College of Computer Science and Engineering, University of Jeddah, Saudi Arabia"
+    email: aasoleman@uj.edu.sa
+  - family-names: Ibrahim
+    given-names: Ahmad
+    affiliation: "College of Computer Science and Engineering, University of Jeddah, Saudi Arabia"
+  - family-names: Alzahrani
+    given-names: Abdulrahman
+    affiliation: "College of Computer Science and Engineering, University of Jeddah, Saudi Arabia"
+  - family-names: Alghamdi
+    given-names: Ahmed Mohammed
+    affiliation: "College of Computer Science and Engineering, University of Jeddah, Saudi Arabia"
+  - family-names: Abdul Manaf
+    given-names: Azizah
+    affiliation: "Department of Computing, LKC Faculty of Engineering and Science, Universiti Tunku Abdul Rahman (UTAR), Kajang, Malaysia"
+  - family-names: Zamani
+    given-names: Mazdak
+    affiliation: "Courant Institute of Mathematical Sciences, New York University, USA"
+preferred-citation:
+  type: article
+  title: "A physics-informed reinforcement learning framework for predictive evaluation of cloud seeding effectiveness"
+  journal: "Expert Systems"
+  volume: 43
+  year: 2026
+  doi: 10.1111/exsy.70365
+  authors:
+    - family-names: Alarood
+      given-names: Ala Abdulsalam
+    - family-names: Ibrahim
+      given-names: Ahmad
+    - family-names: Alzahrani
+      given-names: Abdulrahman
+    - family-names: Alghamdi
+      given-names: Ahmed Mohammed
+    - family-names: Abdul Manaf
+      given-names: Azizah
+    - family-names: Zamani
+      given-names: Mazdak
